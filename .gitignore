@@ -1,0 +1,25 @@
+# Build artifacts
+target/
+build/
+
+# Dependency directories
+.mvn/
+
+# IDE-specific files
+.idea/
+*.iml
+.classpath
+.project
+
+# Log files
+logs/
+
+# Test results
+**/target/test-classes/
+**/target/surefire-reports/
+
+# Generated code
+**/target/generated-sources/
+
+# Spring Boot specific
+spring-boot-devtools.jar
