@@ -1,21 +1,10 @@
-image: maven:3.6.3-jdk-11-slim
-
-stages:
-  - build
-  - test
-  - package
-
 build:
+  image: docker:20.10.16
   stage: build
+  services:
+    - docker:20.10.16-dind
   script:
-    - mvn clean compile
-
-test:
-  stage: test
-  script:
-    - mvn test
-
-package:
-  stage: package
-  script:
-    - mvn package
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t my-todo-app:latest .
+    - docker tag my-todo-app:latest $CI_REGISTRY_USER/my-todo-app:latest
+    - docker push $CI_REGISTRY_USER/my-todo-app:latest
