@@ -1,14 +1,21 @@
-image:
-  docker:latest
+image: maven:3.6.3-jdk-11-slim
 
-services:
-- docker:dind
+stages:
+  - compile_stage
+  - test_stage
+  - package_stage
 
-before_script:
-- echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin
-
-build:
+compile_job:
+  stage: compile_stage
   script:
-    - docker build -t my-todo-app:latest .
-    - docker tag my-todo-app:latest $CI_REGISTRY_USER/my-todo-app:latest
-    - docker push $CI_REGISTRY_USER/my-todo-app:latest
+    - mvn clean compile
+
+test_job:
+  stage: test_stage
+  script:
+    - mvn test
+
+package_job:
+  stage: package_stage
+  script:
+    - mvn package
