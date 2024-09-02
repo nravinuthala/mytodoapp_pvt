@@ -4,7 +4,7 @@ build:
   services:
     - docker:20.10.16-dind
   script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER --password-stdin
     - docker build -t my-todo-app:latest .
     - docker tag my-todo-app:latest $CI_REGISTRY_USER/my-todo-app:latest
     - docker push $CI_REGISTRY_USER/my-todo-app:latest
