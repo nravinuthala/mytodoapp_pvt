@@ -1,11 +1,13 @@
+image:
+  docker:latest
+
+services:
+- docker:dind
+
 before_script:
-— echo “$CI_REGISTRY_PASSWORD” | docker login -u “$CI_REGISTRY_USER” --password-stdin
+- echo “$CI_REGISTRY_PASSWORD” | docker login -u “$CI_REGISTRY_USER” -password-stdin
 
 build:
-  image: docker:20.10.16
-  stage: build
-  services:
-    - docker:20.10.16-dind
   script:
     - docker build -t my-todo-app:latest .
     - docker tag my-todo-app:latest $CI_REGISTRY_USER/my-todo-app:latest
