@@ -8,7 +8,7 @@ stages:
 build:
   stage: build
   script:
-    - mvn clean install
+    - mvn clean compile
 
 test:
   stage: test
