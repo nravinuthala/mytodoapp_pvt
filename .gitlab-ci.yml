@@ -40,4 +40,4 @@ package_job:
 
   artifacts:
     paths:
-      - build/libs/my-springboot-app.jar
+      - build/libs/*.jar
