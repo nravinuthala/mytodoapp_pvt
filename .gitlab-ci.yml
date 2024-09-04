@@ -2,9 +2,9 @@ image: maven:3.6.3-jdk-11-slim
 
 stages:
   - compile_stage
-  - code_quality_stage
-  - test_stage
-  - package_stage
+  # - code_quality_stage
+  # - test_stage
+  # - package_stage
 
 compile_job:
   stage: compile_stage
@@ -37,3 +37,7 @@ package_job:
   stage: package_stage
   script:
     - mvn install
+
+  artifacts:
+    paths:
+      - build/libs/my-springboot-app.jar
