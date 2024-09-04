@@ -40,4 +40,4 @@ package_job:
 
   artifacts:
     paths:
-      - build/libs/*.jar
+      - target/*.jar
