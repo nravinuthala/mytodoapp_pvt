@@ -46,13 +46,14 @@ package_job:
 services:
 - docker:dind
 
-before_script:
-- echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin
+# before_script:
+# - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin
 
 containerize:
   image: docker:latest
   stage: containerize
   script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin
     - docker build -t my-todo-app:latest .
     - docker tag my-todo-app:latest $CI_REGISTRY_USER/my-todo-app:latest
     - docker push $CI_REGISTRY_USER/my-todo-app:latest
