@@ -1,16 +1,9 @@
 image: maven:3.6.3-jdk-11-slim
 
 stages:
-  - compile_stage
   - code_quality_stage
-  - test_stage
   - package_stage
   - containerize
-
-# compile_job:
-#   stage: compile_stage
-#   script:
-#     - mvn clean compile
 
 # sonarqube-check:
 #   image: maven:3.6.3-jdk-11
@@ -29,15 +22,10 @@ stages:
 #     - master # or the name of your main branch
 
 
-# test_job:
-#   stage: test_stage
-#   script:
-#     - mvn test
-
 package_job:
   stage: package_stage
   script:
-    - mvn install
+    - mvn clean package
 
   artifacts:
     paths:
