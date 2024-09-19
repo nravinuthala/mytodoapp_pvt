@@ -1,0 +1,21 @@
+image: maven:3.8.3-openjdk-17
+
+stages:
+  - compile-stage
+  - test-stage
+  - package-stage
+
+compile-job:
+  stage: compile-stage
+  script:
+    mvn compile
+
+test-job:
+  stage: test-stage
+  script:
+    mvn test
+
+package-job:
+  stage: package-stage
+  script:
+    mvn package
