@@ -1,9 +1,9 @@
 image: maven:3.8.3-openjdk-17
 
 stages:
-  compile-stage
-  test-stage
-  package-stage
+  - compile-stage
+  - test-stage
+  - package-stage
 
 compile-job:
   stage: compile-stage
