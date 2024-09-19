@@ -48,6 +48,16 @@ public class ToDoController {
         return "redirect:/todos";
     }
 
+    @PostMapping("/todoNew")
+    public String add(@RequestParam String todoItem, @RequestParam String status, Model model){
+        ToDo todo = new ToDo();
+        todo.setTodoItem(todoItem);
+        todo.setCompleted(status);
+        todoRepository.save(todo);
+        model.addAttribute("todos", todoRepository.findAll());
+        return "redirect:/todos";
+    }
+
     @PostMapping("/todoDelete/{id}")
     public String delete(@PathVariable long id, Model model){
        todoRepository.deleteById(id);
