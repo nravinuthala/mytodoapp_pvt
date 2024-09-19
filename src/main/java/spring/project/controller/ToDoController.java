@@ -48,8 +48,8 @@ public class ToDoController {
         return "redirect:/todos";
     }
 
-    @PostMapping("/todoNew")
-    public String add(@RequestParam String todoItem, @RequestParam String status, Model model){
+    @PostMapping("/todoNew1")
+    public String add1(@RequestParam String todoItem, @RequestParam String status, Model model){
         ToDo todo = new ToDo();
         todo.setTodoItem(todoItem);
         todo.setCompleted(status);
