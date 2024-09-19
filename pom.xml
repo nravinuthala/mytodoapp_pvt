@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <sonar.projectKey>nravinuthala_springboot-todo-project_AZG85SC1JS_-0ExUfpWM</sonar.projectKey>
+        <sonar.projectKey>nravinuthala_springboot-todo-project_AZIJIkm6Q6B9oER0Mnsg</sonar.projectKey>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
     </properties>
 
