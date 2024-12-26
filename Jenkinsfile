@@ -25,7 +25,7 @@ pipeline {
                 )],
                 contextPath: 'test',
                 onFailure: 'false',
-                war: '**/*.jar'
+                war: '**/*.war'
         }
     }
 
