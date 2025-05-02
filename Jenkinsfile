@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-	stage('Checkout) {
+	stage('Checkout') {
 	       steps {
 			// Get some code from a GitHub repository
 	                git url: 'https://github.com/nravinuthala/mytodoapp_pvt.git',
