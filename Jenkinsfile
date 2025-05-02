@@ -10,7 +10,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git url: 'https://github.com/nravinuthala/mytodoapp_pvt.git',
-				    branch: 'Nagaraj'
+				    credentisldId: "github_creds"
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
