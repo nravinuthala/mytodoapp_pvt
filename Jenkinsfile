@@ -23,7 +23,7 @@ pipeline {
                     path: '',
                     url: 'http://localhost:8088/'
                 )],
-                contextPath: 'test',
+                contextPath: 'myapp',
                 onFailure: 'false',
                 war: '**/*.war'
         }
