@@ -22,43 +22,26 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      - name: Archive WAR artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload WAR to GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: myapp
-          path: target/*.jar
+          files: target/*.war
+          tag_name: latest
+          name: Latest Build
+          body: "Automated release from GitHub Actions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      - name: Get Jenkins crumb
-        id: crumb
-        run: |
-          CRUMB_JSON=$(curl -s -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
-            "${JENKINS_URL}/crumbIssuer/api/json")
-          echo "CRUMB_JSON=$CRUMB_JSON" >> $GITHUB_ENV
-          echo "CRUMB=$(echo $CRUMB_JSON | jq -r '.crumb')" >> $GITHUB_ENV
-          echo "CRUMB_FIELD=$(echo $CRUMB_JSON | jq -r '.crumbRequestField')" >> $GITHUB_ENV
-        env:
-          JENKINS_URL: ${{ secrets.JENKINS_URL }}
-          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: myapp
-
       - name: Trigger Jenkins Job
         run: |
           curl -X POST "${JENKINS_URL}/job/deploy_webapp/build" \
-            -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
-            -H "${CRUMB_FIELD}:${CRUMB}"
+            -u "${JENKINS_USER}:${JENKINS_API_TOKEN}"
         env:
           JENKINS_URL: ${{ secrets.JENKINS_URL }}
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-          CRUMB: ${{ env.CRUMB }}
-          CRUMB_FIELD: ${{ env.CRUMB_FIELD }}
