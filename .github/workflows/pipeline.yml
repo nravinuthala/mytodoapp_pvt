@@ -25,7 +25,7 @@ jobs:
       - name: Upload WAR to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: target/*.war
+          files: target/*.jar
           tag_name: latest
           name: Latest Build
           body: "Automated release from GitHub Actions"
