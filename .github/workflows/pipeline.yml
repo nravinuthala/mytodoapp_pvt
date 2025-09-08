@@ -1,24 +1,48 @@
-name: Java CI with Maven
+name: CI-CD Pipeline
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Archive WAR artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: myapp
+          path: target/*.war
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn package
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: myapp
 
+      - name: Trigger Jenkins Deployment
+        run: |
+          curl -X POST "JENKINS_URL/job/deploy_webapp/build?token=$JENKINS_API_TOKEN"
+        
+        env:
+          JENKINS_URL: ${{ secrets.JENKINS_URL }}
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
