@@ -40,12 +40,7 @@ jobs:
 
       - name: Trigger Jenkins Deployment
         run: |
-          CRUMB=$(curl -s -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" "${JENKINS_URL}/crumbIssuer/api/json" | jq -r '.crumb')
-
-          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build?token=${TRIGGER_TOKEN}" \
-              -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
-              -H "Jenkins-Crumb:${CRUMB}"
-          # curl -X POST "${JENKINS_URL}/job/deploy_webapp/build?token=${TRIGGER_TOKEN}"
+          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build?token=${TRIGGER_TOKEN}"
         
         env:
           JENKINS_URL: ${{ secrets.JENKINS_URL }}
