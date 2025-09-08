@@ -33,17 +33,32 @@ jobs:
     needs: build
 
     steps:
+      - name: Get Jenkins crumb
+        id: crumb
+        run: |
+          CRUMB_JSON=$(curl -s -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
+            "${JENKINS_URL}/crumbIssuer/api/json")
+          echo "CRUMB_JSON=$CRUMB_JSON" >> $GITHUB_ENV
+          echo "CRUMB=$(echo $CRUMB_JSON | jq -r '.crumb')" >> $GITHUB_ENV
+          echo "CRUMB_FIELD=$(echo $CRUMB_JSON | jq -r '.crumbRequestField')" >> $GITHUB_ENV
+        env:
+          JENKINS_URL: ${{ secrets.JENKINS_URL }}
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: myapp
 
-      - name: Trigger Jenkins Deployment
+      - name: Trigger Jenkins Job
         run: |
-          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build?token=${TRIGGER_TOKEN}"
-        
+          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build" \
+            -u "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
+            -H "${CRUMB_FIELD}:${CRUMB}"
         env:
           JENKINS_URL: ${{ secrets.JENKINS_URL }}
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-          TRIGGER_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+          CRUMB: ${{ env.CRUMB }}
+          CRUMB_FIELD: ${{ env.CRUMB_FIELD }}
