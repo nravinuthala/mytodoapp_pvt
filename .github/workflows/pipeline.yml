@@ -25,12 +25,12 @@ jobs:
       - name: Upload WAR to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: target/*.jar
+          files: target/*.war
           tag_name: latest
           name: Latest Build
           body: "Automated release from GitHub Actions"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   deploy:
     runs-on: ubuntu-latest
