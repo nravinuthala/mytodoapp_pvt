@@ -13,7 +13,7 @@
     <version>0.1.8</version>
     <name>project</name>
     <description>The project for Spring Boot</description>
-
+    <packaging>war</packaging>
 	
 
     <properties>
