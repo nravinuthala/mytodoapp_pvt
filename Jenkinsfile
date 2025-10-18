@@ -21,7 +21,7 @@ pipeline {
             deploy adapters: [tomcat9 (
                     credentialsId: 'tomcat_deploy_credentials',
                     path: '',
-                    url: 'http://135.13.30.9/:8088/'
+                    url: 'http://135.13.30.9:8088'
                 )],
                 contextPath: 'mytodo_app',
                 onFailure: 'false',
