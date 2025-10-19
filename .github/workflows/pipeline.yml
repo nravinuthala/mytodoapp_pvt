@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Trigger Jenkins Job
         run: |
-          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build" \
+          curl -X POST "${JENKINS_URL}/job/deploy_webapp/build?token=github_token" \
             -u "${JENKINS_USER}:${JENKINS_API_TOKEN}"
         env:
           JENKINS_URL: ${{ secrets.JENKINS_URL }}
