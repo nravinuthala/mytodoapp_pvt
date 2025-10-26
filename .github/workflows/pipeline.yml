@@ -33,7 +33,7 @@ jobs:
           name: Latest Build
           body: "Automated release from GitHub Actions"
         # env:
-        #   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        #   GITHUB_TOKEN: ${{ secrets.GH_PAT }} 
 
   deploy:
     runs-on: ubuntu-latest
